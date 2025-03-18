@@ -113,10 +113,14 @@
     <Content Remove="wwwroot\iPortfolio-1.0.0\forms\contact.php" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\forms\Readme.txt" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\index.html" />
-    <Content Remove="wwwroot\iPortfolio-1.0.0\portfolio-details.html" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\Readme.txt" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\service-details.html" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\starter-page.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Models\SmtpSettings.cs" />
+    <Content Include="Services\EmailService.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -232,6 +236,10 @@
     <None Include="wwwroot\iPortfolio-1.0.0\Readme.txt" />
     <None Include="wwwroot\service-details.html" />
     <None Include="wwwroot\starter-page.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.11.0" />
   </ItemGroup>
 
   <ItemGroup>
