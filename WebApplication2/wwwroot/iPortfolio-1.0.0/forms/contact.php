@@ -1,41 +1,46 @@
 <?php
-  /**
-  * Requires the "PHP Email Form" library
-  * The "PHP Email Form" library is available only in the pro version of the template
-  * The library should be uploaded to: vendor/php-email-form/php-email-form.php
-  * For more info and help: https://bootstrapmade.com/php-email-form/
-  */
+// Yalnızca POST isteklerini işleyin.
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Form alanlarını al ve boşlukları temizle.
+    $name = strip_tags(trim($_POST["name"]));
+    $name = str_replace(array("\r", "\n"), array(" ", " "), $name);
+    $email = filter_var(trim($_POST["email"]), FILTER_SANITIZE_EMAIL);
+    $message = trim($_POST["message"]);
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+    // Gönderilen verileri kontrol edin.
+    if (empty($name) OR empty($message) OR !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        // 400 (bad request) hata kodu ve çıkış.
+        http_response_code(400);
+        echo "Lütfen formu doğru bir şekilde doldurun ve tekrar deneyin.";
+        exit;
+    }
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
-  }
+   
+    $recipient = "krytopuz@gmail.com";
+    $subject = "Mesaj: $name tarafından gönderildi";
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+    // E-posta içeriği.
+    $email_content = "Adı: $name\n";
+    $email_content .= "E-posta: $email\n\n";
+    $email_content .= "Mesaj:\n$message\n";
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+    // E-posta başlıkları.
+    $email_headers = "From: $name <$email>";
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  $contact->add_message( $_POST['message'], 'Message', 10);
+    // E-posta gönder.
+    if (mail($recipient, $subject, $email_content, $email_headers)) {
+        // 200 (başarılı) yanıt kodu.
+        http_response_code(200);
+        echo "Teşekkürler! Mesajınız başarıyla gönderildi.";
+    } else {
+        // 500 (iç sunucu hatası) yanıt kodu.
+        http_response_code(500);
+        echo "Üzgünüz, mesajınızı gönderirken bir hata oluştu.";
+    }
 
-  echo $contact->send();
-?>
+} else {
+    // POST olmayan istekler için 403 (yasak) yanıt kodu.
+    http_response_code(403);
+    echo "Formu göndermede bir sorun oluştu, lütfen tekrar deneyin.";
+}
+?> 

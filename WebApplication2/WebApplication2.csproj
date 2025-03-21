@@ -110,17 +110,11 @@
     <Content Remove="wwwroot\iPortfolio-1.0.0\assets\vendor\typed.js\typed.umd.js" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\assets\vendor\typed.js\typed.umd.js.map" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\assets\vendor\waypoints\noframework.waypoints.js" />
-    <Content Remove="wwwroot\iPortfolio-1.0.0\forms\contact.php" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\forms\Readme.txt" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\index.html" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\Readme.txt" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\service-details.html" />
     <Content Remove="wwwroot\iPortfolio-1.0.0\starter-page.html" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Models\ContactFormModel.cs" />
-    <Content Include="Services\EmailService.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -229,7 +223,6 @@
     <None Include="wwwroot\iPortfolio-1.0.0\assets\vendor\typed.js\typed.umd.js" />
     <None Include="wwwroot\iPortfolio-1.0.0\assets\vendor\typed.js\typed.umd.js.map" />
     <None Include="wwwroot\iPortfolio-1.0.0\assets\vendor\waypoints\noframework.waypoints.js" />
-    <None Include="wwwroot\iPortfolio-1.0.0\forms\contact.php" />
     <None Include="wwwroot\iPortfolio-1.0.0\forms\Readme.txt" />
     <None Include="wwwroot\index.html" />
     <None Include="wwwroot\portfolio-details.html" />
@@ -239,14 +232,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="cloudscribe.Email.Senders" Version="8.0.1" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
     <PackageReference Include="MailKit" Version="4.11.0" />
+    <PackageReference Include="MimeKit" Version="4.11.0" />
+    <PackageReference Include="PhpSerializerNET" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="wwwroot\iPortfolio-1.0.0\assets\vendor\bootstrap-icons\bootstrap-icons.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controller\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

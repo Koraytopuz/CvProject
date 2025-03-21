@@ -400,7 +400,7 @@
 
           </div>
       </section><!-- /Services Section -->
-      <section id="contact" class="contact section">
+   <section id="contact" class="contact section">
           <form method="post">
               <!-- Section Title -->
               <div class="container section-title" data-aos="fade-up">
@@ -480,48 +480,46 @@
       </section>
 
       <script>
-          document.getElementById("contactForm").addEventListener("submit", async function (event) {
-              event.preventDefault();
+          document.addEventListener("DOMContentLoaded", function () {
+              let form = document.getElementById("contactForm");
+              if (form) {
+                  form.addEventListener("submit", async function (event) {
+                      event.preventDefault();
 
-              // Get form values
-              let name = document.getElementById("name").value.trim();
-              let email = document.getElementById("email").value.trim();
-              let subject = document.getElementById("subject").value.trim();
-              let message = document.getElementById("message").value.trim();
+                      let name = document.getElementById("name").value.trim();
+                      let email = document.getElementById("email").value.trim();
+                      let message = document.getElementById("message").value.trim();
 
-              // UI elements
-              let loadingMessage = document.querySelector(".loading");
-              let errorMessage = document.querySelector(".error-message");
-              let successMessage = document.querySelector(".sent-message");
+                      let loadingMessage = document.querySelector(".loading");
+                      let errorMessage = document.querySelector(".error-message");
+                      let successMessage = document.querySelector(".sent-message");
 
-              // Show loading message
-              loadingMessage.style.display = "block";
-              errorMessage.style.display = "none";
-              successMessage.style.display = "none";
-
-              try {
-                  let response = await fetch("/api/contact/send", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ name, email, subject, message })
-                  });
-
-                  let result = await response.json();
-
-                  if (response.ok) {
-                      successMessage.style.display = "block";
+                      loadingMessage.style.display = "block";
                       errorMessage.style.display = "none";
-                      loadingMessage.style.display = "none";
+                      successMessage.style.display = "none";
 
-                      // Clear form fields
-                      document.getElementById("contactForm").reset();
-                  } else {
-                      throw new Error(result.message || "Something went wrong!");
-                  }
-              } catch (error) {
-                  errorMessage.textContent = "Error: " + error.message;
-                  errorMessage.style.display = "block";
-                  loadingMessage.style.display = "none";
+                      try {
+                          let response = await fetch("/api/contact/send", {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ name, email, message })
+                          });
+
+                          let result = await response.json();
+
+                          if (response.ok) {
+                              successMessage.style.display = "block";
+                              loadingMessage.style.display = "none";
+                              form.reset();
+                          } else {
+                              throw new Error(result.message || "Something went wrong!");
+                          }
+                      } catch (error) {
+                          errorMessage.textContent = "Error: " + error.message;
+                          errorMessage.style.display = "block";
+                          loadingMessage.style.display = "none";
+                      }
+                  });
               }
           });
       </script>
