@@ -27,13 +27,3 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
-
-
-
-public class EmailRequest
-{
-    public string Email { get; set; } = "";
-    public string Subject { get; set; } = "";
-    public string Name { get; set; } = "";
-    public string Message { get; set; } = "";
-}

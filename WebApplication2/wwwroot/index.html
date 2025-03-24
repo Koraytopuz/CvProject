@@ -400,129 +400,378 @@
 
           </div>
       </section><!-- /Services Section -->
-   <section id="contact" class="contact section">
-          <form method="post">
-              <!-- Section Title -->
-              <div class="container section-title" data-aos="fade-up">
-                  <h2>Contact</h2>
-                  <p>You can contact me through this channel.</p>
-              </div><!-- End Section Title -->
+      <!--<section id="contact" class="contact section">-->
+      <!-- Section Title -->
+      <!--<div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>You can contact me through this channel.</p>
+    </div>-->
+      <!-- End Section Title -->
+      <!--<div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row gy-4">
+                <div class="col-lg-5">
+                    <div class="info-wrap">
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                            <i class="bi bi-geo-alt flex-shrink-0"></i>
+                            <div>
+                                <h3>Address</h3>
+                                <p>Gaziantep / Sahinbey</p>
+                            </div>
+                        </div>
 
-              <div class="container" data-aos="fade-up" data-aos-delay="100">
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                            <i class="bi bi-telephone flex-shrink-0"></i>
+                            <div>
+                                <h3>Call Us</h3>
+                                <p>+90 553 055 2740</p>
+                            </div>
+                        </div>
 
-                  <div class="row gy-4">
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                            <i class="bi bi-envelope flex-shrink-0"></i>
+                            <div>
+                                <h3>Email Us</h3>
+                                <p>krytopuz@gmail.com</p>
+                            </div>
+                        </div>
 
-                      <div class="col-lg-5">
-                          <div class="info-wrap">
-                              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                                  <i class="bi bi-geo-alt flex-shrink-0"></i>
-                                  <div>
-                                      <h3>Address</h3>
-                                      <p>Gaziantep / Sahinbey</p>
-                                  </div>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30658.55252137847!2d37.3473834!3d37.0662209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1531e5f939c9d3b9%3A0xc3d8e02152d34db2!2s%C5%9Eahinbey%2C%20Gaziantep!5e0!3m2!1str!2str!4v1710418300000!5m2!1str!2str"
+                                frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <form action="https://formspree.io/f/xanejjez" method="POST" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                        <div class="row gy-4">
+                            <div class="col-md-6">
+                                <label for="name" class="pb-2">Your Name</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="email" class="pb-2">Your Email</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="message" class="pb-2">Message</label>
+                                <textarea name="message" rows="10" class="form-control" required></textarea>
+                            </div>
+
+                            <div class="col-md-12 text-center">
+                                <div class="loading">Sending...</div>
+                                <div class="error-message"></div>
+                                <input type="hidden" name="_redirect" value="#">
+                                <div class="sent-message">Mesajınız başarıyla iletilmiştir. Teşekkürler!</div>
+                                <button type="submit">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('.php-email-form');
+            const loading = form.querySelector('.loading');
+            const errorMessage = form.querySelector('.error-message');
+            const sentMessage = form.querySelector('.sent-message');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent the default form submission
+
+                // Show loading indicator
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+                sentMessage.style.display = 'none';
+
+                // Get form data
+                const formData = new FormData(form);
+
+                // Send the form data to Formspree using fetch API
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json' // Request JSON response
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Hide loading indicator
+                        loading.style.display = 'none';
+
+                        // Check if the submission was successful
+                        if (data.ok) {
+                            // Show success message
+                            sentMessage.style.display = 'block';
+
+                            // Reset the form
+                            form.reset();
+
+                            // Optionally, hide the success message after a few seconds
+                            setTimeout(function () {
+                                sentMessage.style.display = 'none';
+                            }, 5000);
+                        } else {
+                            // Show error message for API errors
+                            throw new Error('Form submission failed');
+                        }
+                    })
+                    .catch(error => {
+                        // Hide loading indicator
+                        loading.style.display = 'none';
+
+                        // Show error message
+                        errorMessage.textContent = 'There was a problem sending your message. Please try again later.';
+                        errorMessage.style.display = 'block';
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    </script>-->
+      <!--<section id="contact" class="contact section">-->
+      <!-- Section Title -->
+      <!--<div class="container section-title" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>You can contact me through this channel.</p>
+    </div>-->
+      <!-- End Section Title -->
+      <!--<div class="container" data-aos="fade-up" data-aos-delay="100">
+            <div class="row gy-4">
+                <div class="col-lg-5">
+                    <div class="info-wrap">
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                            <i class="bi bi-geo-alt flex-shrink-0"></i>
+                            <div>
+                                <h3>Address</h3>
+                                <p>Gaziantep / Sahinbey</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                            <i class="bi bi-telephone flex-shrink-0"></i>
+                            <div>
+                                <h3>Call Us</h3>
+                                <p>+90 553 055 2740</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                            <i class="bi bi-envelope flex-shrink-0"></i>
+                            <div>
+                                <h3>Email Us</h3>
+                                <p>krytopuz@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30658.55252137847!2d37.3473834!3d37.0662209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1531e5f939c9d3b9%3A0xc3d8e02152d34db2!2s%C5%9Eahinbey%2C%20Gaziantep!5e0!3m2!1str!2str!4v1710418300000!5m2!1str!2str"
+                                frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <form action="#" id="contact-form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                        <div class="row gy-4">
+                            <div class="col-md-6">
+                                <label for="name" class="pb-2">Your Name</label>
+                                <input type="text" name="user_name" id="name" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="email" class="pb-2">Your Email</label>
+                                <input type="email" name="user_email" id="email" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="message" class="pb-2">Message</label>
+                                <textarea name="message" id="message" rows="10" class="form-control" required></textarea>
+                            </div>
+
+                            <div class="col-md-12 text-center">
+                                <div class="loading">Sending...</div>
+                                <div class="error-message"></div>
+                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                                <button type="submit">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>-->
+      <!-- Add EmailJS SDK -->
+      <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // EmailJS'i başlat
+            emailjs.init("6bMde8ZnGx_ImkxRG");
+
+            const form = document.getElementById('contact-form');
+            const loading = form.querySelector('.loading');
+            const errorMessage = form.querySelector('.error-message');
+            const sentMessage = form.querySelector('.sent-message');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault(); // Formun varsayılan gönderme işlemini engelle
+
+                // Yükleniyor göstergesini aç
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+                sentMessage.style.display = 'none';
+
+                // EmailJS ile formu gönder
+                emailjs.sendForm('service_9e5vi7j', 'template_1olahsj', this)
+                    .then(function () {
+                        // Yükleniyor göstergesini kapat
+                        loading.style.display = 'none';
+
+                        // Başarı mesajını göster
+                        sentMessage.style.display = 'block';
+
+                        // Formu sıfırla
+                        form.reset();
+
+                        // 3 saniye sonra sayfayı yenile
+                        setTimeout(function () {
+                            location.reload();
+                        }, 3000);
+
+                    }, function (error) {
+                        // Yükleniyor göstergesini kapat
+                        loading.style.display = 'none';
+
+                        // Hata mesajını göster
+                        errorMessage.textContent = 'There was a problem sending your message. Please try again later.';
+                        errorMessage.style.display = 'none';
+                        console.error('EmailJS error:', error);
+                    });
+            });
+        });
+    </script>-->
+
+      <section id="contact" class="contact section">
+          <!-- Section Title -->
+          <div class="container section-title" data-aos="fade-up">
+              <h2>Contact</h2>
+              <p>You can contact me through this channel.</p>
+          </div><!-- End Section Title -->
+
+          <div class="container" data-aos="fade-up" data-aos-delay="100">
+              <div class="row gy-4">
+                  <div class="col-lg-5">
+                      <div class="info-wrap">
+                          <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                              <i class="bi bi-geo-alt flex-shrink-0"></i>
+                              <div>
+                                  <h3>Address</h3>
+                                  <p>Gaziantep / Sahinbey</p>
                               </div>
-
-                              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                                  <i class="bi bi-telephone flex-shrink-0"></i>
-                                  <div>
-                                      <h3>Call Us</h3>
-                                      <p>+90 553 055 2740</p>
-                                  </div>
-                              </div>
-
-                              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                                  <i class="bi bi-envelope flex-shrink-0"></i>
-                                  <div>
-                                      <h3>Email Us</h3>
-                                      <p>krytopuz@gmail.com</p>
-                                  </div>
-                              </div>
-
-                              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30658.55252137847!2d37.3473834!3d37.0662209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1531e5f939c9d3b9%3A0xc3d8e02152d34db2!2s%C5%9Eahinbey%2C%20Gaziantep!5e0!3m2!1str!2str!4v1710418300000!5m2!1str!2str"
-                                      frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy"
-                                      referrerpolicy="no-referrer-when-downgrade"></iframe>
                           </div>
-                      </div>
 
-                      <div class="col-lg-7">
-                          <form id="contactForm" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-                              <div class="row gy-4">
-
-                                  <div class="col-md-6">
-                                      <label for="name" class="pb-2">Your Name</label>
-                                      <input type="text" id="name" name="name" class="form-control" required>
-                                  </div>
-
-                                  <div class="col-md-6">
-                                      <label for="email" class="pb-2">Your Email</label>
-                                      <input type="email" id="email" name="email" class="form-control" required>
-                                  </div>
-
-                                  <div class="col-md-12">
-                                      <label for="message" class="pb-2">Message</label>
-                                      <textarea id="message" name="message" rows="10" class="form-control" required></textarea>
-                                  </div>
-
-                                  <div class="col-md-12 text-center">
-                                      <div class="loading" style="display: none;">Sending...</div>
-                                      <div class="error-message" style="display: none; color: red;"></div>
-                                      <div class="sent-message" style="display: none; color: green;">Your message has been sent. Thank you!</div>
-
-                                      <button type="submit">Send Message</button>
-                                  </div>
-
+                          <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                              <i class="bi bi-telephone flex-shrink-0"></i>
+                              <div>
+                                  <h3>Call Us</h3>
+                                  <p>+90 553 055 2740</p>
                               </div>
-                          </form>
+                          </div>
+
+                          <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                              <i class="bi bi-envelope flex-shrink-0"></i>
+                              <div>
+                                  <h3>Email Us</h3>
+                                  <p>krytopuz@gmail.com</p>
+                              </div>
+                          </div>
+
+                          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30658.55252137847!2d37.3473834!3d37.0662209!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1531e5f939c9d3b9%3A0xc3d8e02152d34db2!2s%C5%9Eahinbey%2C%20Gaziantep!5e0!3m2!1str!2str!4v1710418300000!5m2!1str!2str"
+                                  frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy"
+                                  referrerpolicy="no-referrer-when-downgrade"></iframe>
                       </div>
                   </div>
+
+                  <div class="col-lg-7">
+                      <form id="contact-form" action="/index.html" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                          <div class="row gy-4">
+                              <div class="col-md-6">
+                                  <label for="title" class="pb-2">Your Name</label>
+                                  <input type="text" name="title" id="title" class="form-control" required>
+                              </div>
+
+                              <div class="col-md-6">
+                                  <label for="name" class="pb-2">Your Email</label>
+                                  <input type="email" name="name" id="name" class="form-control" required>
+                              </div>
+
+                              <div class="col-md-12">
+                                  <label for="message" class="pb-2">Message</label>
+                                  <textarea name="message" id="message" rows="10" class="form-control" required></textarea>
+                              </div>
+
+                              <div class="col-md-12 text-center">
+                                  <div class="loading">Sending...</div>
+                                  <div class="error-message"></div>
+                                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                                  <button type="submit">Send Message</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
               </div>
-          </form>
+          </div>
       </section>
 
+      <!-- Add EmailJS SDK -->
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
       <script>
-          document.addEventListener("DOMContentLoaded", function () {
-              let form = document.getElementById("contactForm");
-              if (form) {
-                  form.addEventListener("submit", async function (event) {
-                      event.preventDefault();
+          document.addEventListener('DOMContentLoaded', function () {
+              // Initialize EmailJS
+              emailjs.init("6bMde8ZnGx_ImkxRG");
 
-                      let name = document.getElementById("name").value.trim();
-                      let email = document.getElementById("email").value.trim();
-                      let message = document.getElementById("message").value.trim();
+              const form = document.getElementById('contact-form');
+              const loading = form.querySelector('.loading');
+              const errorMessage = form.querySelector('.error-message');
+              const sentMessage = form.querySelector('.sent-message');
 
-                      let loadingMessage = document.querySelector(".loading");
-                      let errorMessage = document.querySelector(".error-message");
-                      let successMessage = document.querySelector(".sent-message");
+              // Form submit olayını dinle
+              form.addEventListener('submit', function (e) {
+                 /* e.preventDefault();*/ // Normal form gönderimini engelle
 
-                      loadingMessage.style.display = "block";
-                      errorMessage.style.display = "none";
-                      successMessage.style.display = "none";
+                  // Tüm mesajları gizle ve yükleniyor göster
+                  loading.style.display = 'block';
+                  errorMessage.style.display = 'none';
+                  sentMessage.style.display = 'none';
 
-                      try {
-                          let response = await fetch("/api/contact/send", {
-                              method: "POST",
-                              headers: { "Content-Type": "application/json" },
-                              body: JSON.stringify({ name, email, message })
-                          });
-
-                          let result = await response.json();
-
-                          if (response.ok) {
-                              successMessage.style.display = "block";
-                              loadingMessage.style.display = "none";
+                  // Form verilerini EmailJS ile gönder
+                  emailjs.sendForm('service_9e5vi7j', 'template_1olahsj', this)
+                      .then(
+                          function (response) {
+                              // Başarılı cevap
+                              console.log("Başarılı!", response);
+                              loading.style.display = 'none';
+                              sentMessage.style.display = 'block';
                               form.reset();
-                          } else {
-                              throw new Error(result.message || "Something went wrong!");
+                          },
+                          function (error) {
+                              // Hata durumu
+                              console.error("Hata:", error);
+                              loading.style.display = 'none';
+                              errorMessage.textContent = "Mesaj gönderilirken bir hata oluştu: " + error.text;
+                              errorMessage.style.display = 'block';
                           }
-                      } catch (error) {
-                          errorMessage.textContent = "Error: " + error.message;
-                          errorMessage.style.display = "block";
-                          loadingMessage.style.display = "none";
-                      }
-                  });
-              }
+                      );
+              });
           });
       </script>
+
 
 
   </main>
